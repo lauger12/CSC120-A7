@@ -25,7 +25,7 @@ public class Cafe extends Building {
     public void sellCoffee(int size, int nSugarPackets, int nCreams) {
         if(this.nCups < 1 || this.nCoffeeOunces < size || this.nSugarPackets < nSugarPackets || this.nCreams < nCreams){
             System.out.println("Restocking...");
-            this.restock(size, nSugarPackets, nCreams, nCreams);
+            this.restock(size, nSugarPackets, nCreams, 1);
             System.out.println("Restocked");
         }
             System.out.println("Selling Coffee");
@@ -33,6 +33,24 @@ public class Cafe extends Building {
             this.nCoffeeOunces -= size;
             this.nSugarPackets -= nSugarPackets;
             this.nCreams -= nCreams;
+            System.out.println("Sold!");
+        }
+
+
+      /**
+     * overloaded sellCoffee method for a default coffee order with no details
+     * Default order is a 12 oz black coffee (no cream or sugar)
+     * Still 1 cup used
+     */
+    public void sellCoffee() {
+        if(this.nCups < 1 || this.nCoffeeOunces < 12){
+            System.out.println("Restocking...");
+            this.restock(12, 0, 0, 1);
+            System.out.println("Restocked");
+        }
+            System.out.println("Selling Coffee");
+            this.nCups -= 1;
+            this.nCoffeeOunces -= 12;
             System.out.println("Sold!");
         }
 
@@ -51,11 +69,27 @@ public class Cafe extends Building {
         this.nCups += 1;
     }
 
+    // public void goUp() {
+    //     throw new RuntimeException("Sorry, upstairs is staff only!");
+
+    // }
+
+    /**
+     *  modified showOptions method from Building (parent), shows the options for the current building
+     *  didn't include private methods since customers aren't going to be able to use methods such as restock
+
+     */
+    public void showOptions() {
+        super.showOptions();
+        System.out.println(" + sellCoffee()");
+    }
 
     public static void main(String[] args) {
-        Cafe c = new Cafe("Cafe Cafe", "12 Awesome Ave", 1, 10, 10, 10, 10);
-        c.sellCoffee(12, 1, 1);
-        // System.out.println("Ounces Left:" + c.nCoffeeOunces);
+        Cafe c = new Cafe("Cafe Cafe", "12 Awesome Ave", 1, 32, 10, 10, 10);
+        // c.sellCoffee(12, 1, 1);
+        c.sellCoffee();
+        // c.showOptions();
+        System.out.println("Ounces Left:" + c.nCoffeeOunces);
     }
 
 }

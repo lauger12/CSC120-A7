@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class House extends Building {
@@ -41,7 +42,22 @@ public class House extends Building {
     try {
       this.residents.add(name);
     } catch (InputMismatchException e) {
-      System.out.println("Please enter a string!"); // exception catching for if we use a scanner later on to add
+      System.out.println("Please enter a string"); // exception catching for if we use a scanner later on to add
+    }
+  }
+
+
+    /**
+   * Appends a String ArrayList of new residents to the residents ArrayList
+   * overloaded method (allowing for multiple move ins at once instead of only individuals)
+   * 
+   * @param name ArrayList of new residents
+   */
+  public void moveIn(ArrayList<String> name) {
+    try {
+      this.residents.addAll(name);
+    } catch (InputMismatchException e) {
+      System.out.println("Please enter a list of students"); // exception catching for if we use a scanner later on to add
     }
   }
 
@@ -99,9 +115,10 @@ public class House extends Building {
   public static void main(String[] args) {
     House morris = new House("Morris House", "101 Green Street in NoHo", 4, true, true);
     System.out.println(morris);
-    morris.moveIn("A.Student");
+    ArrayList<String> r = new ArrayList<>(Arrays.asList("Student 1", "Student 2", "etc"));
+    morris.moveIn(r);
     System.out.println(morris.residents);
-    morris.moveOut("A.Student");
+    morris.moveIn("A.Student");
     System.out.println(morris.residents);
   }
 }
