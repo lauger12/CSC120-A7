@@ -10,25 +10,25 @@ Listed below are various aspects of the assignment.  When you turn in your work,
 
 ## Assignment Points:
 
-_____ 1 pt: The `House`, `Library`, and `Cafe` classes all `extend` the modified `Building` class.
+__yes__ 1 pt: The `House`, `Library`, and `Cafe` classes all `extend` the modified `Building` class.
 
 ### Level 1: Method `Overrides` (4 pts)
 
-_____ 1 pt: The `House`, `Library`, and `Cafe` classes all override the `showOptions()` method to include their additional interactive methods
+__yes__ 1 pt: The `House`, `Library`, and `Cafe` classes all override the `showOptions()` method to include their additional interactive methods
 
-_____ 1 pt: The `Library` class has a `goToFloor(...)` method that allows movement between non-adjacent floors
+__yes__ 1 pt: The `Library` class has a `goToFloor(...)` method that allows movement between non-adjacent floors
 
-_____ 1 pt: The `House` class has a `goToFloor(...)` method that allows movement between non-adjacent floors only if an elevator is present
+__yes__ 1 pt: The `House` class has a `goToFloor(...)` method that allows movement between non-adjacent floors only if an elevator is present
 
-_____ 1 pt: The `Cafe` class has a `goToFloor(...)` method that doesn't permit movement off the first floor (we assume that any additional floors are for storage / accessible only to employees)
+__yes__ 1 pt: The `Cafe` class has a `goToFloor(...)` method that doesn't permit movement off the first floor (we assume that any additional floors are for storage / accessible only to employees)
 
 ### Level 2: Method `Overloads` (3 pts)
 
-_____ 1 pt: The `House` class includes at least 2 overloaded methods
+__yes__ 1 pt: The `House` class includes at least 2 overloaded methods
 
-_____ 1 pt: The `Library` class includes at least 2 overloaded methods
+__yes__ 1 pt: The `Library` class includes at least 2 overloaded methods
 
-_____ 1 pt: The `Cafe` class includes at least 2 overloaded methods
+___yes__ 1 pt: The `Cafe` class includes at least 2 overloaded methods
 
 ### Level 3: `CampusMap.java` (2 pts)
 

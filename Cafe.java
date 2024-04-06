@@ -14,6 +14,28 @@ public class Cafe extends Building {
         this.nCups = nCups;
     }
 
+    /* Default constructor */
+    public Cafe() {
+        this("<John and Jane's Cafe>", "<An Unsuspicious Street>", 1, 32, 10, 10, 10);
+    }
+
+    /**
+     * goToFloor for the Cafe class, where we don't want customers going onto
+     * staff-only floors
+     * 
+     */
+    public void goToFloor(int floorNum) {
+        throw new RuntimeException("Hey! These other floors are staff only, you can't go to them.");
+    }
+
+    public void goUp() {
+        throw new RuntimeException("Hey! These other floors are staff only, you can't go to them.");
+    }
+
+    public void goDown() {
+        throw new RuntimeException("Hey! These other floors are staff only, you can't go to them.");
+    }
+
     /**
      * decreases inventory values of ounces, sugar, cream, (and cups), based on
      * coffee sold
@@ -23,36 +45,36 @@ public class Cafe extends Building {
      * @param nCreams
      */
     public void sellCoffee(int size, int nSugarPackets, int nCreams) {
-        if(this.nCups < 1 || this.nCoffeeOunces < size || this.nSugarPackets < nSugarPackets || this.nCreams < nCreams){
+        if (this.nCups < 1 || this.nCoffeeOunces < size || this.nSugarPackets < nSugarPackets
+                || this.nCreams < nCreams) {
             System.out.println("Restocking...");
             this.restock(size, nSugarPackets, nCreams, 1);
             System.out.println("Restocked");
         }
-            System.out.println("Selling Coffee");
-            this.nCups -= 1;
-            this.nCoffeeOunces -= size;
-            this.nSugarPackets -= nSugarPackets;
-            this.nCreams -= nCreams;
-            System.out.println("Sold!");
-        }
+        System.out.println("Selling Coffee");
+        this.nCups -= 1;
+        this.nCoffeeOunces -= size;
+        this.nSugarPackets -= nSugarPackets;
+        this.nCreams -= nCreams;
+        System.out.println("Sold!");
+    }
 
-
-      /**
+    /**
      * overloaded sellCoffee method for a default coffee order with no details
      * Default order is a 12 oz black coffee (no cream or sugar)
      * Still 1 cup used
      */
     public void sellCoffee() {
-        if(this.nCups < 1 || this.nCoffeeOunces < 12){
+        if (this.nCups < 1 || this.nCoffeeOunces < 12) {
             System.out.println("Restocking...");
             this.restock(12, 0, 0, 1);
             System.out.println("Restocked");
         }
-            System.out.println("Selling Coffee");
-            this.nCups -= 1;
-            this.nCoffeeOunces -= 12;
-            System.out.println("Sold!");
-        }
+        System.out.println("Selling Coffee");
+        this.nCups -= 1;
+        this.nCoffeeOunces -= 12;
+        System.out.println("Sold!");
+    }
 
     /**
      * restocks cafe materials by adding the needed values for the order
@@ -70,14 +92,16 @@ public class Cafe extends Building {
     }
 
     // public void goUp() {
-    //     throw new RuntimeException("Sorry, upstairs is staff only!");
+    // throw new RuntimeException("Sorry, upstairs is staff only!");
 
     // }
 
     /**
-     *  modified showOptions method from Building (parent), shows the options for the current building
-     *  didn't include private methods since customers aren't going to be able to use methods such as restock
-
+     * modified showOptions method from Building (parent), shows the options for the
+     * current building
+     * didn't include private methods since customers aren't going to be able to use
+     * methods such as restock
+     * 
      */
     public void showOptions() {
         super.showOptions();

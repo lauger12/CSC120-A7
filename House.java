@@ -15,6 +15,34 @@ public class House extends Building {
     this.residents = new ArrayList<>();
   }
 
+    /* Default constructor */
+    public House() {
+      this("<A Default House>", "<The Void>", 4, true, false);
+  }
+
+  /**
+   * goToFloor for the House class, where if there is an elevator in the house, direct
+   * travel between non-adjacent floors is allowed, otherwise, it will advise the
+   * user to use goUp() or goDown() instead
+   * 
+   */
+  public void goToFloor(int floorNum) {
+    if (this.activeFloor == -1) {
+      throw new RuntimeException(
+          "You are not inside this Building. Must call enter() before navigating between floors.");
+    }
+    if (floorNum < 1 || floorNum > this.nFloors) {
+      throw new RuntimeException(
+          "Invalid floor number. Valid range for this Building is 1-" + this.nFloors + ".");
+    }
+    if (this.hasElevator){
+    System.out.println("You are now on floor #" + floorNum + " of " + this.name);
+    this.activeFloor = floorNum;
+  } else {
+    throw new RuntimeException("Can't travel directly to a floor without an elevator, try using goUp() and goDown() instead");
+  }
+}
+
   /**
    * Getter for hasDiningRoom
    * 
@@ -46,10 +74,10 @@ public class House extends Building {
     }
   }
 
-
-    /**
+  /**
    * Appends a String ArrayList of new residents to the residents ArrayList
-   * overloaded method (allowing for multiple move ins at once instead of only individuals)
+   * overloaded method (allowing for multiple move ins at once instead of only
+   * individuals)
    * 
    * @param name ArrayList of new residents
    */
@@ -57,10 +85,10 @@ public class House extends Building {
     try {
       this.residents.addAll(name);
     } catch (InputMismatchException e) {
-      System.out.println("Please enter a list of students"); // exception catching for if we use a scanner later on to add
+      System.out.println("Please enter a list of students"); // exception catching for if we use a scanner later on to
+                                                             // add
     }
   }
-
 
   /**
    * Adds a given resident to the residents ArrayList
@@ -112,6 +140,16 @@ public class House extends Building {
     return desc;
   }
 
+  /**
+   * modified showOptions method from Building (parent), shows the options for the
+   * current building
+   */
+  public void showOptions() {
+    super.showOptions();
+    System.out.println(" + getHasDiningRoom()" + "\n + getNumResidents()" + "\n + moveIn()" + "\n + moveOut()"
+        + "\n + isResident()");
+  }
+
   public static void main(String[] args) {
     House morris = new House("Morris House", "101 Green Street in NoHo", 4, true, true);
     System.out.println(morris);
@@ -120,5 +158,8 @@ public class House extends Building {
     System.out.println(morris.residents);
     morris.moveIn("A.Student");
     System.out.println(morris.residents);
+    morris.showOptions();
+    morris.enter();
+    morris.goToFloor(4);
   }
 }
