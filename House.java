@@ -2,12 +2,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class House extends Building {
 
+public class House extends Building {
   private ArrayList<String> residents;
   private boolean hasDiningRoom;
   private boolean hasElevator;
 
+  /**
+   * Constructor for House
+   * @param name
+   * @param address
+   * @param nFloors
+   * @param hasDiningRoom
+   * @param hasElevator
+   */
   public House(String name, String address, int nFloors, boolean hasDiningRoom, boolean hasElevator) {
     super(name, address, nFloors);
     this.hasDiningRoom = hasDiningRoom;
@@ -15,49 +23,86 @@ public class House extends Building {
     this.residents = new ArrayList<>();
   }
 
-    /* Default constructor */
-    public House() {
-      this("<A Default House>", "<The Void>", 4, true, false);
+  /* Default constructor */
+  public House() {
+    this("<A Default House>", "<The Void>", 4, true, false);
   }
 
   /**
-   * goToFloor for the House class, where if there is an elevator in the house, direct
+   * goToFloor for the House class, where if there is an elevator in the house,
+   * direct
    * travel between non-adjacent floors is allowed, otherwise, it will advise the
    * user to use goUp() or goDown() instead
    * 
    */
   public void goToFloor(int floorNum) {
+    if (this.hasElevator) {
+      if (this.activeFloor == -1) {
+        throw new RuntimeException(
+            "You are not inside this Building. Must call enter() before navigating between floors.");
+      }
+      if (floorNum < 1 || floorNum > this.nFloors) {
+        throw new RuntimeException(
+            "Invalid floor number. Valid range for this Building is 1-" + this.nFloors + ".");
+      }
+      System.out.println("You are now on floor #" + floorNum + " of " + this.name);
+      this.activeFloor = floorNum;
+    } else {
+      throw new RuntimeException(
+          "Can't travel directly to a floor without an elevator, try using goUp() and goDown() instead");
+    }
+  }
+
+
+    /**
+     * Method to increase the active floor by 1, overridden from Building (not using goToFloor())
+     */
+    public void goUp() {
+      if (this.activeFloor == -1) {
+        throw new RuntimeException(
+            "You are not inside this Building. Must call enter() before navigating between floors.");
+      }
+      else if(this.activeFloor + 1 == nFloors + 1){
+        throw new RuntimeException("You can't go past this floor!");
+      }
+      else{
+        this.activeFloor++;
+      }
+  }
+
+
+  /**
+   * Method to decrease the active floor by 1, overridden from Building (not using goToFloor())
+   */
+  public void goDown() {
     if (this.activeFloor == -1) {
       throw new RuntimeException(
           "You are not inside this Building. Must call enter() before navigating between floors.");
     }
-    if (floorNum < 1 || floorNum > this.nFloors) {
-      throw new RuntimeException(
-          "Invalid floor number. Valid range for this Building is 1-" + this.nFloors + ".");
+    else if(this.activeFloor - 1 <= 0){
+      throw new RuntimeException("You can't go down any more!");
     }
-    if (this.hasElevator){
-    System.out.println("You are now on floor #" + floorNum + " of " + this.name);
-    this.activeFloor = floorNum;
-  } else {
-    throw new RuntimeException("Can't travel directly to a floor without an elevator, try using goUp() and goDown() instead");
+    else{
+      this.activeFloor--;
+    }
   }
-}
+
 
   /**
    * Getter for hasDiningRoom
    * 
    * @return T/F value for whether the house has a dining room
    */
-  public boolean getHasDiningRoom() {
+  public boolean hasDiningRoom() {
     return this.hasDiningRoom;
   }
 
   /**
-   * Getter for nResidents (called num residents for camelcase's sake)
+   * Getter for nResidents 
    * 
    * @return nResidents, int for number of residents in the house
    */
-  public int getNumResidents() {
+  public int nResidents() {
     return this.residents.size();
   }
 
@@ -85,8 +130,7 @@ public class House extends Building {
     try {
       this.residents.addAll(name);
     } catch (InputMismatchException e) {
-      System.out.println("Please enter a list of students"); // exception catching for if we use a scanner later on to
-                                                             // add
+      System.out.println("Please enter a list of students");
     }
   }
 
@@ -151,7 +195,7 @@ public class House extends Building {
   }
 
   public static void main(String[] args) {
-    House morris = new House("Morris House", "101 Green Street in NoHo", 4, true, true);
+    House morris = new House("Morris House", "101 Green Street in NoHo", 4, true, false);
     System.out.println(morris);
     ArrayList<String> r = new ArrayList<>(Arrays.asList("Student 1", "Student 2", "etc"));
     morris.moveIn(r);
@@ -160,6 +204,6 @@ public class House extends Building {
     System.out.println(morris.residents);
     morris.showOptions();
     morris.enter();
-    morris.goToFloor(4);
+    System.out.println(morris.activeFloor);
   }
 }

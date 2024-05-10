@@ -22,6 +22,12 @@ public class Building {
     }
 
     /* Full constructor */
+    /**
+     * Constructor for Building
+     * @param name
+     * @param address
+     * @param nFloors
+     */
     public Building(String name, String address, int nFloors) {
         if (name != null) {
             this.name = name;
@@ -36,14 +42,26 @@ public class Building {
     }
 
     /* Accessors */
+    /**
+     * Getter for building name
+     * @return String name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Getter for address of a building
+     * @return String address
+     */
     public String getAddress() {
         return this.address;
     }
 
+    /**
+     * Getter for nFloors of a building
+     * @return int nFloors
+     */
     public int getFloors() {
         return this.nFloors;
     }
@@ -58,6 +76,13 @@ public class Building {
         return this; // Return a pointer to the current building
     }
 
+    /**
+     * Exits a building and returns null for the building, and sets activefloor to
+     * -1 (which is used as a check to see if you are in or out of the building in
+     * other methods)
+     * 
+     * @return returns null for the building
+     */
     public Building exit() {
         if (this.activeFloor == -1) {
             throw new RuntimeException("You are not inside this Building. Must call enter() before exit().");
@@ -70,6 +95,11 @@ public class Building {
         return null; // We're outside now, so the building is null
     }
 
+    /**
+     * Sets the current floor that the player/user is on to the given floor #
+     * 
+     * @param floorNum
+     */
     public void goToFloor(int floorNum) {
         if (this.activeFloor == -1) {
             throw new RuntimeException(
@@ -83,19 +113,34 @@ public class Building {
         this.activeFloor = floorNum;
     }
 
+    /**
+     * Method to increase the active floor by 1
+     */
     public void goUp() {
         this.goToFloor(this.activeFloor + 1);
     }
 
+
+    /**
+     * Method to decrease the active floor by 1
+     */
     public void goDown() {
         this.goToFloor(this.activeFloor - 1);
     }
 
+
+    /**
+     * Prints the options/commands for the given building
+     */
     public void showOptions() {
         System.out.println("Available options at " + this.name
                 + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n)");
     }
 
+    /**
+     * toString for Building
+     * @return toString output (String)
+     */
     public String toString() {
         return this.name + " is a " + this.nFloors + "-story building located at " + this.address + ".";
     }

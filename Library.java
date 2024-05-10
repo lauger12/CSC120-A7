@@ -7,24 +7,32 @@ public class Library extends Building {
 
   private Hashtable<String, Boolean> collection;
 
+  /**
+   * Constructor for Library
+   * 
+   * @param name
+   * @param address
+   * @param nFloors
+   */
   public Library(String name, String address, int nFloors) {
     super(name, address, nFloors);
     this.collection = new Hashtable<String, Boolean>();
 
   }
 
-    /* Default constructor */
-    public Library() {
-      this("<Mako's Bookstore>", "<Shark Street>", 1);
+  /* Default constructor */
+  public Library() {
+    this("<Mako's Bookstore>", "<Shark Street>", 1);
   }
 
   /**
-   * For the library specifically, movement between non-adjacent floors is allowed for libraries, since we can't check their elevator status
+   * For the library specifically, movement between non-adjacent floors is
+   * allowed, since we can't check their elevator status
    * inherited from Building
    */
 
   public void goToFloor(int floorNum) {
-   super.goToFloor(floorNum);
+    super.goToFloor(floorNum);
   }
 
   /**
@@ -47,7 +55,15 @@ public class Library extends Building {
    * @return the title of the removed book
    */
   public String removeTitle(String title) {
-    this.collection.remove(title);
+    if (this.collection.contains(title)) {
+      try {
+        this.collection.remove(title);
+      } catch (InputMismatchException f) {
+        System.out.println("Please enter a valid title");
+      }
+    } else {
+      System.out.println("Collection doesn't contain the book you're trying to remove");
+    }
     return title;
   }
 
@@ -59,7 +75,11 @@ public class Library extends Building {
    */
   public void checkOut(String title) {
     if (isAvailable(title)) {
-      this.collection.replace(title, false);
+      try {
+        this.collection.replace(title, false);
+      } catch (InputMismatchException d) {
+        System.out.println("Please enter a valid title");
+      }
     } else {
       throw new RuntimeException("You can't check out this book, sorry!");
     }
@@ -73,14 +93,14 @@ public class Library extends Building {
    */
   public void checkOut(ArrayList<String> title) {
     // if (this.collection.contains(title)) {
-    for (int i = 0; i < title.size(); i++)
-      this.collection.replace(title.get(i), false);
-    // } else {
-    // throw new RuntimeException("You can't check out these books, sorry!");
-    // }
+    for (int i = 0; i < title.size(); i++) {
+      if (this.collection.containsKey(title.get(i))) {
+        this.collection.replace(title.get(i), false);
+      } else {
+        throw new RuntimeException("You can't check out all these books at once, sorry! Some may be availble or in our collection, so double check with our librarian");
+      }
+    }
   }
-  // (above) need to find a way to cycle through and check availibilty, removing
-  // if statement for now
 
   /**
    * returns a book by setting the key's value to true
@@ -114,9 +134,17 @@ public class Library extends Building {
    * @return T/F whether the title is availble to checkout
    */
   public boolean isAvailable(String title) {
-    if (this.collection.get(title)) {
-      return true;
-    } else {
+    try {
+      if (this.collection.get(title)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (InputMismatchException g) {
+      System.out.println("Please enter a valid title");
+      return false;
+    } catch (RuntimeException l){
+      System.out.println("This title is not in the current collection"); // catching a null pointer exception if the book isn't in collection
       return false;
     }
   }
@@ -143,15 +171,15 @@ public class Library extends Building {
 
   public static void main(String[] args) {
     Library n = new Library("Nielson", "address", 4);
-    n.addTitle("Jaws");
+    // n.addTitle("Jaws");
     n.addTitle("Jaws 2");
     n.addTitle("Jaws 3");
+    System.out.println("Jaws availible?: " +n.isAvailable("Jaws"));
     ArrayList<String> b = new ArrayList<>(Arrays.asList("Jaws", "Jaws 2"));
     n.checkOut(b);
     System.out.println(n.containsTitle("Jaws"));
     System.out.println(n.isAvailable("Jaws"));
     n.printCollection();
-
   }
 
 }
